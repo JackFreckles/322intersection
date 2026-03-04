@@ -1,6 +1,6 @@
 name: Python Unit Tests
 
-on: [push, pull_request]
+on: [push, pull_request] # GitHub will run test's on push and pull requests
 
 jobs:
   build:

@@ -1,3 +1,14 @@
+'''
+Clinton Reimann
+CSCI 332 Spring 2025
+Programming Assignment #class17 (main)
+
+I acknowledge that I have worked on this assignment independently, except
+where explicitly noted and referenced. Any collaboration or use of external
+resources has been properly cited. I am fully aware of the consequences of
+academic dishonesty and agree to abide by the university's academic integrity
+policy. I understand the importance the consequences of plagiarism.
+'''
 
 def get_orientation(p1: list[int, int], p2: list[int, int], p3: list[int, int]) -> str:
     angle = (p2[0] - p1[0])*(p3[1] - p2[1]) - (p2[1] - p1[1])*(p3[0] - p2[0])

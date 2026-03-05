@@ -2,32 +2,52 @@
 def get_orientation(p1: list[int, int], p2: list[int, int], p3: list[int, int]) -> str:
     angle = (p2[0] - p1[0])*(p3[1] - p2[1]) - (p2[1] - p1[1])*(p3[0] - p2[0])
     
-    if angle == 1:
+    if angle > 0:
         return 2
-    elif angle == 0:
-        return 0
-    else:
+    elif angle < 0:
         return 1
+    else:
+        return 0
     
 def on_segment(p1, p2, p3):
-    angle = (p2[0] - p1[0])*(p3[1] - p2[1]) - (p2[1] - p1[1])*(p3[0] - p2[0])
-
-    if (angle == 0):
+    if (min(p1[0], p3[0]) <= p2[0] <= max(p1[0], p3[0]) and min(p1[1], p3[1]) <= p2[1] <= max(p1[1], p3[1])):
         return True
-    else:
-        return False
+    return False
 
 def do_intersect(segment1, segment2):
-    line1 = (segment1[0][1] - segment1[0][0], segment1[1][1] - segment1[1][0])
-    line2 = (segment2[0][1] - segment2[0][0], segment2[1][1] - segment2[1][0])
+    p1, q1 = segment1
+    p2, q2 = segment2
+
+    o1 = get_orientation(p1, q1, p2)
+    o2 = get_orientation(p1, q1, q2)
+    o3 = get_orientation(p2, q2, p1)
+    o4 = get_orientation(p2, q2, q1)
+
+    # General case
+    if o1 != o2 and o3 != o4:
+        return True
+
+    # Special Cases
+    if o1 == 0 and on_segment(p1, p2, q1):
+        return True
+
+    if o2 == 0 and on_segment(p1, q2, q1):
+        return True
+
+    if o3 == 0 and on_segment(p2, p1, q2):
+        return True
+
+    if o4 == 0 and on_segment(p2, q1, q2):
+        return True
+
+    return False
     
 if __name__ == "__main__":
-    p1 = (2,4)
-    p2 = (3,5)
-    p3 = (4,6)
-    p4 = (4, 8)
+    p1 = (1.0, 1.0)
+    p2 = (4.0, 4.0)
+    p3 = (2.0, 1.0)
+    p4 = (5.0, 4.0)
 
     seg1 = (p1, p2)
     seg2 = (p3, p4)
-    print(get_orientation(p1, p2, p4))
-    print(on_segment(p1, p2, p3))
+    print(do_intersect(seg1, seg2))
